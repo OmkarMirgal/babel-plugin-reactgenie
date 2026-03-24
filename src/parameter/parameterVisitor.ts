@@ -1,5 +1,5 @@
 import { NodePath } from '@babel/traverse';
-import { types as t } from '@babel/core';
+import * as t from '@babel/types';
 
 /**
  * Helper function to create a field/class decorator from a parameter decorator.
@@ -51,7 +51,7 @@ export function parameterVisitor(
   const methodPath = path as NodePath<t.ClassMethod>;
   const params = methodPath.get('params') || [];
 
-  params.slice().forEach(function(param) {
+  params.slice().forEach(function(param: NodePath<t.ClassMethod['params'][number]>) {
     let identifier =
       param.node.type === 'Identifier' || param.node.type === 'ObjectPattern'
         ? param.node
@@ -66,7 +66,7 @@ export function parameterVisitor(
 
     ((param.node as t.Identifier).decorators || [])
       .slice()
-      .forEach(function(decorator) {
+      .forEach(function(decorator: t.Decorator) {
         if (methodPath.node.kind === 'constructor') {
           resultantDecorator = createParamDecorator(
             param.key as number,

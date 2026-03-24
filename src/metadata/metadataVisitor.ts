@@ -1,5 +1,5 @@
 import { NodePath } from '@babel/traverse';
-import { types as t } from '@babel/core';
+import * as t from '@babel/types';
 import {
   serializeDestructuringDefaultValues,
   serializeDestructuringType,
@@ -10,7 +10,7 @@ import {
 
 function createMetadataDesignDecorator(
   design: 'design:type' | 'design:paramtypes' | 'design:returntype' | 'design:typeinfo' | 'design:is_static' | 'design:destructuringparamtypes' | 'design:returnarrayelementtype' | 'design:destructuringparamvalues',
-  typeArg: t.Expression | t.SpreadElement | t.JSXNamespacedName | t.ArgumentPlaceholder
+  typeArg: t.Expression | t.SpreadElement | t.ArgumentPlaceholder
 ): t.Decorator {
   return t.decorator(
     t.callExpression(
@@ -50,7 +50,7 @@ export function metadataVisitor(
         createMetadataDesignDecorator(
           'design:paramtypes',
           t.arrayExpression(
-            field.params.map(param => serializeType(classPath, param))
+            field.params.map((param: t.ClassMethod['params'][number]) => serializeType(classPath, param))
           )
         )
       );
@@ -97,8 +97,8 @@ export function metadataVisitor(
       }
 
       // if the method is a destructuring parameter, emit the types of the destructured parameters
-      if (field.params.some(param => param.type === 'ObjectPattern')) {
-        const types = field.params.map(param => serializeDestructuringType(classPath, param))
+      if (field.params.some((param: t.ClassMethod['params'][number]) => param.type === 'ObjectPattern')) {
+        const types = field.params.map((param: t.ClassMethod['params'][number]) => serializeDestructuringType(classPath, param))
         decorators!.push(
           createMetadataDesignDecorator(
             'design:destructuringparamtypes',
@@ -107,7 +107,7 @@ export function metadataVisitor(
             )
           )
         );
-        const values = field.params.map(param => serializeDestructuringDefaultValues(classPath, param))
+        const values = field.params.map((param: t.ClassMethod['params'][number]) => serializeDestructuringDefaultValues(classPath, param))
         decorators!.push(
           createMetadataDesignDecorator(
             'design:destructuringparamvalues',

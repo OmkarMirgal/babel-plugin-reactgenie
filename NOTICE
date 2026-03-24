@@ -1,0 +1,18 @@
+Fork notice for @garrix82/babel-plugin-reactgenie
+
+This package is a fork of:
+- babel-plugin-reactgenie
+- and earlier upstream work from babel-plugin-transform-typescript-metadata
+
+Original upstream repository:
+https://github.com/StanfordHCI/babel-plugin-reactgenie
+
+Fork maintainer:
+Omkar Mirgal
+https://github.com/OmkarMirgal
+
+This fork includes additional ReactGenie-specific behavior, including stable
+__genieClassName injection for @GenieClass declarations so class identity
+survives production minification.
+
+The upstream project license remains MIT. See LICENSE and LICENSE.orig.

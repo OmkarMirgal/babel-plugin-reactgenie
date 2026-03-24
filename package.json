@@ -1,11 +1,14 @@
 {
-  "name": "babel-plugin-reactgenie",
-  "version": "0.3.8",
-  "description": "Replacement of babel-plugin-transform-typescript-metadata for ReactGenie",
+  "name": "@garrix82/babel-plugin-reactgenie",
+  "version": "0.3.9",
+  "description": "ReactGenie Babel plugin with metadata emission and stable Genie class-name injection",
   "main": "lib/plugin.js",
   "types": "lib/plugin.d.ts",
-  "repository": "StanfordHCI/babel-plugin-reactgenie",
-  "author": "Jackie Yang <jackie@jackieyang.me>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmkarMirgal/babel-plugin-reactgenie.git"
+  },
+  "author": "Omkar Mirgal <https://github.com/OmkarMirgal>",
   "license": "MIT",
   "files": [
     "lib/"
@@ -19,13 +22,13 @@
   ],
   "scripts": {
     "dev": "babel src -w -d lib -x \".ts\"",
-    "prepare": "yarn build",
-    "build": "yarn build:lib && yarn build:types",
+    "prepare": "npm run build",
+    "build": "npm run build:lib && npm run build:types",
     "prebuild:lib": "rimraf lib",
     "build:lib": "babel src -d lib -x \".ts\"",
     "build:types": "tsc --emitDeclarationOnly",
     "check-types": "tsc --noEmit",
-    "release": "yarn test && yarn build && release-it",
+    "release": "npm test && npm run build && release-it",
     "test": "jest --forceExit",
     "test:dev": "jest --watch",
     "test:ci": "jest --ci --runInBand --coverage --forceExit"
@@ -51,7 +54,8 @@
     }
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",

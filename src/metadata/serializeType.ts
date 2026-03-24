@@ -1,5 +1,5 @@
-import { types as t } from '@babel/core';
 import { NodePath } from '@babel/traverse';
+import * as t from '@babel/types';
 
 type InferArray<T> = T extends Array<infer A> ? A : never;
 
@@ -98,7 +98,7 @@ export function serializeDestructuringType(
       if (!paramLiteralType || !t.isTSTypeLiteral(paramLiteralType)) {
         return createVoidZero();
       } else {
-        const properties = paramLiteralType.members.map(member => {
+        const properties = paramLiteralType.members.map((member: t.TSTypeElement) => {
           if (!t.isTSPropertySignature(member)) {
             throw new Error('Unexpected member type');
           }
@@ -141,7 +141,7 @@ export function serializeDestructuringDefaultValues(
     if (!paramProperties) {
       return createVoidZero();
     } else {
-      const properties = paramProperties.map(member => {
+      const properties = paramProperties.map((member: t.ObjectMethod | t.ObjectProperty | t.RestElement | t.SpreadElement) => {
         if (!t.isObjectProperty(member)) {
           throw new Error('Unexpected member type');
         }
